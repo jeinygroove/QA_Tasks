@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import {Link} from '../routes';
 import * as React from "react";
-import {server} from '../next.config';
+import {server} from '../config/config';
 
 
 export const getServerSideProps = async () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import {Link} from "../../routes";
-import {server} from '../../next.config';
+import {server} from '../../config/config';
 import axios from "axios";
 
 export default class addBook extends React.Component {
