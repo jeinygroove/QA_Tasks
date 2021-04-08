@@ -1,4 +1,4 @@
-import * as events from "events";
+let events = require("events");
 
 const dev = process.env.NODE_ENV !== 'production';
 
