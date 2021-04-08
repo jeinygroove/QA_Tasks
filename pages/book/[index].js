@@ -3,7 +3,7 @@ import React from 'react';
 import {withRouter} from 'next/router';
 import {Link} from "../../routes";
 import {Tab, TabBody, TabContainer, TabHead} from "../../public/styles";
-import {server} from "../../config/config";
+import {server} from '../next.config';
 
 export const getServerSideProps = async (context) => {
     if (context.params?.index !== undefined) {
