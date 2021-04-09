@@ -1,28 +1,24 @@
-import formidable from 'formidable';
-import * as fs from "fs";
-import * as path from "path";
+import aws from 'aws-sdk';
 
+export default async function handler(req, res) {
+    aws.config.update({
+        accessKeyId: process.env.ACCESS_KEY,
+        secretAccessKey: process.env.SECRET_KEY,
+        region: process.env.REGION,
+        signatureVersion: 'v4',
+    });
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
+    const s3 = new aws.S3();
+    const post = await s3.createPresignedPost({
+        Bucket: process.env.BUCKET_NAME,
+        Fields: {
+            key: req.query.file,
+        },
+        Expires: 60, // seconds
+        Conditions: [
+            ['content-length-range', 0, 1048576], // up to 1 MB
+        ],
+    });
+
+    res.status(200).json(post);
 }
-
-export default async (req, res) => {
-    const form = new formidable.IncomingForm();
-    form.uploadDir = './public/upload';
-    form.keepExtensions = true;
-    form.keepFilenames = true;
-    form.on('file', function(field, file) {
-        const fileName = file.name;
-        fs.rename(file.path, path.join(process.cwd(), fileName), function(err) {
-            if (!err) {
-                return res.send(fileName);
-            }
-        });
-    });
-    form.parse(req, (err, fields, files) => {
-        // console.log(err, fields, files);
-    });
-};

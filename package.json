@@ -25,6 +25,7 @@
     "react-dom": "17.0.1"
   },
   "devDependencies": {
+    "aws-sdk": "^2.883.0",
     "axios": "^0.21.1",
     "multer": "^1.4.2",
     "prisma": "^2.0.0"
