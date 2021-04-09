@@ -11,8 +11,7 @@ export const config = {
 
 export default async (req, res) => {
     const form = new formidable.IncomingForm();
-    //form.uploadDir = serverRuntimeConfig.PROJECT_ROOT;
-    //console.log(serverRuntimeConfig, serverRuntimeConfig.PROJECT_ROOT)
+    form.uploadDir = './public/upload';
     form.keepExtensions = true;
     form.keepFilenames = true;
     form.on('file', function(field, file) {
