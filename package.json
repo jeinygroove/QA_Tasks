@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://jeinygroove.github.io/QA_Tasks/",
   "scripts": {
+    "cdk": "cdk",
     "dev": "next dev",
     "prestart": "next build",
     "build": "next build",
@@ -28,7 +29,7 @@
     "aws-sdk": "^2.883.0"
   },
   "devDependencies": {
-    "aws-sdk": "^2.883.0",
+    "aws-cdk": "^1.97.0",
     "axios": "^0.21.1",
     "multer": "^1.4.2",
     "prisma": "^2.0.0"

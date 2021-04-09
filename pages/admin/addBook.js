@@ -33,6 +33,29 @@ export default class addBook extends React.Component {
                 description: e.target.value
             })
         }
+        this.uploadPhoto = async (file, id) => {
+                    const filename = encodeURIComponent(file.name);
+
+                    const res = await fetch(`/api/books/uploadUrl?file=${id}-${filename}`);
+                    const { url, fields } = await res.json();
+                    const formData = new FormData();
+
+                    console.log(filename)
+                    Object.entries({ ...fields, file }).forEach(([key, value]) => {
+                        formData.append(key, value);
+                    });
+
+                    const upload = await fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (upload.ok) {
+                        console.log('Uploaded successfully!');
+                    } else {
+                        console.error('Upload failed.');
+                    }
+               };
         this.addBook = async (e) => {
             e.preventDefault()
             if (this.state.description.length === 0 || this.state.description.length > 256) {
@@ -60,9 +83,7 @@ export default class addBook extends React.Component {
                         method: 'POST',
                         body: JSON.stringify(body),
                     }).then((res) => res.json())
-                    const data = new FormData()
-                    data.append("file", state.coverFile, res.id.toString() + "_" + state.coverFileName)
-                    const response = await axios.post(`${server}/api/books/addImage`, data);
+                    await this.uploadPhoto(state.coverFile, res.id);
                     this.myFormRef.reset();
                 } catch (error) {
                     this.setState({
@@ -122,18 +143,18 @@ export default class addBook extends React.Component {
                     height: 100vh;
                     display: inline;
                   }
-                  
+
                   main > form {
                     display: grid;
                     grid-template-columns: 1fr 3fr;
                     grid-column-gap: 10px;
                     grid-row-gap: 10px;
                   }
-                  
+
                   label {
                     margin-right: 20px;
                   }
-                  
+
                   .add-book-field {
                     display: flex;
                     flex-direction: row;

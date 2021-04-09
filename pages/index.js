@@ -22,7 +22,7 @@ class Home extends React.Component {
     }
 
     async componentDidMount() {
-        await this.fetchBooks();
+        await this.fetchBooks()
     }
 
     render() {
@@ -49,8 +49,8 @@ class Home extends React.Component {
                                     <h2>{book.title}</h2>
                                     <div className="book-info">
                                         <img className="book-cover"
-                                             src={(book.cover.length !== 0) ? "/upload/" + book.id + "_" + book.cover : "/upload/default.jpeg"}
-                                             alt="book1 cover"/>
+                                             src={(book.cover.length !== 0) ? `/api/books/getImage?img=${book.id}-${book.cover}` : "/upload/default.jpeg"}
+                                            alt="book1 cover"/>
                                         <div className="book-info-text">
                                             <p>{book.averageRating.toPrecision(2)} из 5 (5 отзывов)</p>
                                             <p>{book.description}</p>

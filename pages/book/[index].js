@@ -107,12 +107,12 @@ class ReviewForm extends React.Component {
                     opacity: 0;
                     position: absolute;
                   }
-                  
+
                   .is-orange {
                     color: orange;
                     cursor: pointer;
                   }
-                  
+
                   .not-orange {
                     color: #aaa;
                     cursor: pointer;
@@ -236,7 +236,7 @@ class Book extends React.Component {
                         <div id="book-info-with-reviews" style={{marginBottom: "20px"}}>
                             <h1>{this.state.book.title}</h1>
                             <div className="book-info">
-                                <img className="book-cover" src={(this.state.book.cover.length !== 0) ? "/upload/" + this.state.book.id + "_" + this.state.book.cover : "/upload/default.jpeg"}/>
+                                <img className="book-cover" src={(this.state.book.cover.length !== 0) ? `/api/books/getImage?img=${this.state.book.id}-${this.state.book.cover}` : "/upload/default.jpeg"}/>
                                 <div className="book-info-text">
                                     <p>{this.state.book.averageRating.toPrecision(2)} из 5 (5 отзывов)</p>
                                     {isTabOne &&
@@ -300,7 +300,7 @@ class Book extends React.Component {
                     display: inline !important;
                     height: 100vh;
                   }
-                  
+
                   #book-info-with-reviews {
                     width: 800px;
                     vertical-align: top;
