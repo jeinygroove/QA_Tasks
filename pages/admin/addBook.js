@@ -63,6 +63,7 @@ export default class addBook extends React.Component {
                     const data = new FormData()
                     data.append("file", state.coverFile, res.id.toString() + "_" + state.coverFileName)
                     const response = await axios.post(`${server}/api/books/addImage`, data);
+                    this.myFormRef.reset();
                 } catch (error) {
                     this.setState({
                         message: error.message
@@ -88,7 +89,7 @@ export default class addBook extends React.Component {
 
                 <main>
                     <h1>Добавить книгу</h1>
-                    <form>
+                    <form ref={(el) => this.myFormRef = el}>
                         <label>Название:</label>
                         <input onChange={this.changeTitle} className="add-book-input" placeholder="Placeholder"/>
                         <label>Ссылка на книгу:</label>
