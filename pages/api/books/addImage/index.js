@@ -11,19 +11,19 @@ export const config = {
 
 export default async (req, res) => {
     const form = new formidable.IncomingForm();
-    form.uploadDir = "./";
+    //form.uploadDir = serverRuntimeConfig.PROJECT_ROOT;
+    //console.log(serverRuntimeConfig, serverRuntimeConfig.PROJECT_ROOT)
     form.keepExtensions = true;
     form.keepFilenames = true;
     form.on('file', function(field, file) {
         const fileName = file.name;
-        fs.rename(file.path, path.join(form.uploadDir, fileName), function(err) {
+        fs.rename(file.path, path.join(process.cwd(), fileName), function(err) {
             if (!err) {
                 return res.send(fileName);
             }
         });
     });
     form.parse(req, (err, fields, files) => {
-        return res.send(files);
         // console.log(err, fields, files);
     });
 };
