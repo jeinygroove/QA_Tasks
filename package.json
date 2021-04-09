@@ -2,11 +2,13 @@
   "name": "learn-starter",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jeinygroove.github.io/QA_Tasks/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "next build && next export -o docs && git checkout -- docs/CNAME && git checkout -- docs/.nojekyll && git add docs && git commit -m \"chore: regen site\" && git push origin master"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
@@ -14,7 +16,9 @@
     "@emotion/styled": "^11.1.5",
     "@prisma/client": "^2.20.1",
     "formidable": "^1.2.2",
+    "gh-pages": "^3.1.0",
     "next": "^10.0.0",
+    "next-auth": "^3.14.0",
     "next-connect": "^0.10.1",
     "next-routes": "^1.4.2",
     "react": "17.0.1",
@@ -23,6 +27,6 @@
   "devDependencies": {
     "axios": "^0.21.1",
     "multer": "^1.4.2",
-    "prisma": "^2.20.1"
+    "prisma": "^2.0.0"
   }
 }
