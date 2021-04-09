@@ -10,7 +10,10 @@ export const getStaticProps = async () => {
         headers: new Headers()
     })
     const res = await fetch(request)
-    const books = await res.json()
+    const books = await res.json().catch((e) => {
+        console.log(e)
+        return []
+    })
     return {
         props: {books},
     }
