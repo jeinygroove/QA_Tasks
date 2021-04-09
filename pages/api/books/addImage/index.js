@@ -11,7 +11,7 @@ export const config = {
 
 export default async (req, res) => {
     const form = new formidable.IncomingForm();
-    form.uploadDir = "./upload";
+    form.uploadDir = "./";
     form.keepExtensions = true;
     form.keepFilenames = true;
     form.on('file', function(field, file) {
@@ -23,6 +23,7 @@ export default async (req, res) => {
         });
     });
     form.parse(req, (err, fields, files) => {
+        return res.send(files);
         // console.log(err, fields, files);
     });
 };
