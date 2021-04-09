@@ -16,8 +16,12 @@ export default async function handler(req, res) {
                 Key: imgName,
             },
             (err, data) => {
-                let imgData = data.Body.toString('base64');
-                resolve(imgData);
+                try {
+                    let imgData = data.Body.toString('base64');
+                    resolve(imgData);
+                } catch (e) {
+                    resolve('')
+                }
             }
         );
     });
