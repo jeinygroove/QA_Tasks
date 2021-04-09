@@ -3,26 +3,26 @@ import {Link} from '../routes';
 import * as React from "react";
 import {server} from '../config/config';
 
-
-export const getStaticProps = async () => {
-    const request = new Request(`${server}/api/books`, {
-        method: 'GET',
-        headers: new Headers()
-    })
-    const res = await fetch(request)
-    const books = await res.json().catch((e) => {
-        console.log(e)
-        return []
-    })
-    return {
-        props: {books},
-    }
-}
-
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {books: props.books}
+        this.fetchBooks = async () => {
+            const request = new Request(`${server}/api/books`, {
+                method: 'GET',
+                headers: new Headers()
+            })
+
+            const res = await fetch(request)
+            const books = await res.json()
+            this.setState({
+                books: books
+            })
+        }
+    }
+
+    async componentDidMount() {
+        await this.fetchBooks();
     }
 
     render() {
@@ -40,7 +40,7 @@ class Home extends React.Component {
                 </Link>
 
                 <main>
-                    {this.props.books === undefined
+                    {this.state.books === undefined
                         ? <h1>Loading...</h1>
                         :
                         <ol id="books-list">
