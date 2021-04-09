@@ -5,6 +5,7 @@
   "homepage": "https://jeinygroove.github.io/QA_Tasks/",
   "scripts": {
     "dev": "next dev",
+    "prestart": "next build",
     "build": "next build",
     "start": "next start -p $PORT",
     "predeploy": "npm run build",
