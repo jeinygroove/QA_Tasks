@@ -4,7 +4,7 @@ import * as React from "react";
 import {server} from '../config/config';
 
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
     const request = new Request(`${server}/api/books`, {
         method: 'GET',
         headers: new Headers()
