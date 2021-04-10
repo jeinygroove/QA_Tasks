@@ -5,18 +5,28 @@ import prisma from '../../../lib/prisma'
 export default async function handle(req, res) {
     const bookId = req.query.id;
     if (req.method === "GET") {
-        const book = await prisma.book.findUnique({
-            where: {id: Number(bookId)},
-        });
-        res.json(book);
+        try {
+            const book = await prisma.book.findUnique({
+                where: {id: Number(bookId)},
+            });
+            res.json(book);
+        } catch (e) {
+            console.log(e)
+            throw e;
+        }
     } else if (req.method === "DELETE") {
-        await prisma.review.deleteMany({
-            where: {bookId: Number(bookId)},
-        });
-        const book = await prisma.book.delete({
-            where: {id: Number(bookId)},
-        });
-        res.json(book);
+        try {
+            await prisma.review.deleteMany({
+                where: {bookId: Number(bookId)},
+            });
+            const book = await prisma.book.delete({
+                where: {id: Number(bookId)},
+            });
+            res.json(book);
+        } catch (e) {
+            console.log(e)
+            throw e;
+        }
     } else {
         throw new Error(
             `The HTTP ${req.method} method is not supported at this route.`

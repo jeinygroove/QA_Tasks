@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "deploy": "next build && next export -o docs && git checkout -- docs/CNAME && git checkout -- docs/.nojekyll && git add docs && git commit -m \"chore: regen site\" && git push origin master"
+    "start": "next start"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
@@ -15,14 +14,13 @@
     "@prisma/client": "^2.20.1",
     "formidable": "^1.2.2",
     "next": "^10.0.0",
-    "next-connect": "^0.10.1",
     "next-routes": "^1.4.2",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "styled-jsx": "^3.4.4"
   },
   "devDependencies": {
     "axios": "^0.21.1",
-    "multer": "^1.4.2",
     "prisma": "^2.20.1"
   }
 }
