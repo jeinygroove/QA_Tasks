@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prestart": "next build",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT",
+    "predeploy": "npm run build"
   },
   "dependencies": {
     "@emotion/core": "^11.0.0",
