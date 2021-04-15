@@ -5,6 +5,13 @@ import {server} from '../../config/config';
 import axios from "axios";
 import {addBookStyles} from "../../public/styles";
 
+const getSignature = async () => {
+    const response = await fetch("/api/signGen");
+    const data = await response.json();
+    return data;
+};
+
+
 export default class addBook extends React.Component {
     constructor(props) {
         super(props);
@@ -54,13 +61,33 @@ export default class addBook extends React.Component {
             } else {
                 const state = this.state;
                 try {
+                    const { signature, timestamp } = await getSignature();
+
+                    const data = new FormData();
+
+                    data.append("file", state.coverFile);
+                    data.append("signature", signature);
+                    data.append("timestamp", timestamp);
+                    data.append("api_key", process.env.NEXT_PUBLIC_API_Key);
+
+                    const response = await fetch(
+                        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD_NAME}/image/upload`,
+                        {
+                            method: "POST",
+                            body: data,
+                        }
+                    );
+
+                    const cloudinary_image_uploaded = await response.json();
+
                     const l = state.description.length
                     const body = {
                         title: state.title,
-                        coverFileName: state.coverFileName,
+                        coverFileName: cloudinary_image_uploaded.public_id,
                         description: state.description.slice(0, Number(l / 2)),
                         descriptionLong: state.description
                     }
+
                     const res = await fetch(`${server}/api/books/add`, {
                         headers: {
                             "Content-Type": "application/json",
@@ -69,11 +96,6 @@ export default class addBook extends React.Component {
                         body: JSON.stringify(body),
                     }).then((res) => res.json())
 
-                    if (state.coverFile != null) {
-                        const data = new FormData()
-                        data.append("file", state.coverFile, res.id.toString() + "_" + state.coverFileName)
-                        await axios.post(`${server}/api/books/addImage`, data);
-                    }
                     this.myFormRef.reset();
                 } catch (error) {
                     this.setState({

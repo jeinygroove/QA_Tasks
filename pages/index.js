@@ -3,6 +3,7 @@ import {Link} from '../routes';
 import * as React from "react";
 import {server} from '../config/config';
 import {bookListStyles} from "../public/styles";
+import { Image } from "cloudinary-react";
 
 
 export const getServerSideProps = async () => {
@@ -65,9 +66,17 @@ class Home extends React.Component {
                                     <li>
                                         <h2>{book.title}</h2>
                                         <div className="book-info">
+                                            { (book.cover.length !== 0) ?
+                                            <Image
+                                                className="book-cover"
+                                                cloudName={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+                                                publicId={book.coverFileName}
+                                                alt={"book cover"}
+                                                secure
+                                            /> :
                                             <img className="book-cover"
-                                                 src={(book.cover.length !== 0) ? "/upload/" + book.id + "_" + book.cover : "/upload/default.jpeg"}
-                                                 alt="book1 cover"/>
+                                                 src={"/upload/default.jpeg"}
+                                                 alt="book1 cover"/>}
                                             <div className="book-info-text">
                                                 <p>{book.averageRating.toPrecision(2)} из 5 (5 отзывов)</p>
                                                 <p>{book.description}</p>
