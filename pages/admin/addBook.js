@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import {Link} from "../../routes";
 import {server} from '../../config/config';
-import axios from "axios";
 import {addBookStyles} from "../../public/styles";
 
 const getSignature = async () => {
